@@ -10,7 +10,7 @@
     body{background:#eef3f9;min-height:100vh;overflow:hidden}
     .hidden{display:none}
 
-    /* LOGIN SCREEN */
+    /* 1. LOGIN SCREEN */
     .otp-screen{min-height:100vh;display:flex;align-items:center;justify-content:center}
     .otp-card{background:#ffffff;width:100%;max-width:380px;border-radius:24px;padding:26px;box-shadow:0 15px 35px rgba(0,0,0,.1);text-align:center}
     .logo{width:52px;height:52px;border-radius:16px;background:#1e6bff;color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:1.4rem;font-weight:700}
@@ -25,11 +25,11 @@
     .key:active{background:#dbe8ff}
     .error{margin-top:14px;color:#c0362c;font-size:.85rem;font-weight:600}
 
-    /* LOADER */
+    /* 2. LOADER */
     .loader-bar{width:100%;height:8px;background:#e6eef8;border-radius:20px;overflow:hidden;margin:20px 0}
     .loader-fill{width:40%;height:100%;background:#1e6bff;animation:load 1.4s infinite}
 
-    /* DASHBOARD */
+    /* 3. DASHBOARD */
     .app{max-width:420px;margin:0 auto;background:#eef3f9;min-height:100vh;animation:fadeIn .3s ease-out}
     .header{background:linear-gradient(180deg,#0b3c6d,#0a2f57);color:#fff;padding:22px;border-radius:0 0 24px 24px}
     .balance{font-size:2rem;font-weight:700;margin:6px 0}
@@ -38,16 +38,14 @@
     .action{background:#fff;border-radius:14px;padding:16px;text-align:center;font-size:.8rem;color:#0b3c6d;cursor:pointer}
     .action i{font-size:1.4rem;color:#1e6bff;margin-bottom:6px}
 
-    /* PERMISSION MODAL */
-    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:99;padding:20px}
-    .modal-box{background:#fff;width:100%;max-width:300px;border-radius:20px;padding:24px;text-align:center;animation:popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)}
+    /* 4. ACCESS DENIED MODAL (Only for internal tabs) */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:100;padding:20px}
+    .modal-box{background:#fff;width:100%;max-width:300px;border-radius:20px;padding:24px;text-align:center;box-shadow: 0 10px 25px rgba(0,0,0,0.3)}
     .modal-box i{font-size:3rem;color:#c0362c;margin-bottom:15px}
     .modal-box h2{color:#0b3c6d;font-size:1.1rem;margin-bottom:8px}
-    .modal-box p{color:#6b7c93;font-size:.9rem;line-height:1.4}
 
     @keyframes load{0%{margin-left:-40%}100%{margin-left:100%}}
     @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-    @keyframes popIn{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}
     @keyframes shake{0%{transform:translateX(0)}25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-6px)}100%{transform:translateX(0)}}
     .shake{animation:shake .35s}
   </style>
@@ -58,7 +56,7 @@
   <div class="otp-card" id="loginCard">
     <div class="logo">⎔</div>
     <h1>Enter Access Code</h1>
-    <p style="color:#6b7c93;font-size:.9rem">Sign in to Jennifer Lopez Account</p>
+    <p style="color:#6b7c93;font-size:.9rem">Securing account access</p>
     <div class="otp-dots">
       <div class="dot" id="d1"></div><div class="dot" id="d2"></div><div class="dot" id="d3"></div><div class="dot" id="d4"></div>
     </div>
@@ -74,18 +72,19 @@
 
 <div class="otp-screen hidden" id="loaderScreen">
   <div class="otp-card">
-    <div style="font-size:1.1rem;color:#0b3c6d;font-weight:600">Authenticating...</div>
+    <div style="font-size:1.1rem;color:#0b3c6d;font-weight:600">Authenticating</div>
     <div class="loader-bar"><div class="loader-fill"></div></div>
-    <p style="color:#6b7c93;font-size:.85rem">Securing session</p>
+    <p style="color:#6b7c93;font-size:.85rem">Please wait...</p>
   </div>
 </div>
 
 <div class="app hidden" id="app">
   <div class="header">
-    <small>Demo Donation Account</small>
+    <small>Jennifer Lopez Account</small>
     <div class="balance">₦75,000.00</div>
     <small>Available Balance</small>
   </div>
+
   <div class="actions">
     <div class="action" onclick="showDenied()"><i class="fa-solid fa-user"></i>My Account</div>
     <div class="action" onclick="showDenied()"><i class="fa-solid fa-paper-plane"></i>Transfer</div>
@@ -94,20 +93,21 @@
     <div class="action" onclick="showDenied()"><i class="fa-solid fa-arrows-rotate"></i>Move Money</div>
     <div class="action" onclick="showDenied()"><i class="fa-solid fa-credit-card"></i>Cards</div>
   </div>
+
   <div class="section">
     <div style="background:#fff;border-radius:16px;padding:16px;margin-top:14px">
-      <strong>Transaction Activity</strong>
-      <p style="margin-top:10px;font-size:.9rem;color:#1fa463">Verified Opening Balance: ₦75,000.00</p>
+      <strong>Account Activity</strong>
+      <p style="margin-top:10px;font-size:.9rem;color:#1fa463">Verified Balance: ₦75,000.00</p>
     </div>
   </div>
 </div>
 
-<div class="modal-overlay hidden" id="deniedModal" onclick="closeModal()">
+<div class="modal-overlay hidden" id="deniedModal">
   <div class="modal-box">
-    <i class="fa-solid fa-circle-exclamation"></i>
+    <i class="fa-solid fa-circle-xmark"></i>
     <h2>Access Denied</h2>
-    <p>You are not permitted to make any of these actions on this demo account.</p>
-    <button style="margin-top:20px; width:100%; padding:12px; border-radius:10px; border:none; background:#1e6bff; color:#fff; font-weight:600; cursor:pointer">Dismiss</button>
+    <p>You are not permitted to make any of these actions.</p>
+    <button onclick="closeModal()" style="margin-top:20px; width:100%; padding:12px; border-radius:12px; border:none; background:#1e6bff; color:#fff; font-weight:700; cursor:pointer">OK</button>
   </div>
 </div>
 
@@ -124,7 +124,7 @@
     input += String(n);
     document.getElementById('error').classList.add('hidden');
     updateDots();
-    if(input.length === 4) setTimeout(loginFlow, 150);
+    if(input.length === 4) setTimeout(checkAndLogin, 150);
   }
 
   function del(){
@@ -132,12 +132,14 @@
     updateDots();
   }
 
-  // --- LOGIN FLOW (PIN -> LOADER -> DASH) ---
-  function loginFlow(){
+  // --- LOGIN LOGIC ---
+  function checkAndLogin(){
     if(input === CODE){
+      // Transition to Loader
       document.getElementById('otpScreen').classList.add('hidden');
       document.getElementById('loaderScreen').classList.remove('hidden');
       
+      // Transition to App after 2 seconds
       setTimeout(()=>{
         document.getElementById('loaderScreen').classList.add('hidden');
         document.getElementById('app').classList.remove('hidden');
@@ -151,7 +153,7 @@
     }
   }
 
-  // --- DASHBOARD ACTIONS (PERMISSION DENIED) ---
+  // --- TAB ACTION LOGIC ---
   function showDenied(){
     document.getElementById('deniedModal').classList.remove('hidden');
   }
@@ -160,5 +162,6 @@
     document.getElementById('deniedModal').classList.add('hidden');
   }
 </script>
+
 </body>
 </html>
